@@ -1,6 +1,11 @@
 <html>
 <body>
-    <nav> <!-- Navbar code here --> </nav>
+    <nav> 
+        <ul>
+            <li><a href="{% url 'register' %}">Sign Up</a></li>
+            <!-- <li><a href="{% url 'login' %}">Login</a></li> -->
+        </ul>
+    </nav>
     {% block content %}{% endblock %}
     <footer> <!-- Footer code here --> </footer>
 </body>

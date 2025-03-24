@@ -1,10 +1,8 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-class User(AbstractUser):
-    ROLES = [
-        ('engineer', 'Engineer'),
-        ('leader', 'Leader'),
-        ('manager', 'Manager'),
-    ]
-    role = models.CharField(max_length=10, choices=ROLES, default='engineer')
+class User(models.Model):
+    # Your model fields here
+    username = models.CharField(max_length=100)
+    email = models.EmailField()
+    password = models.CharField(max_length=100)
+    # Add other fields as needed
