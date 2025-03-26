@@ -1,11 +1,88 @@
-<!-- users/templates/users/register.html -->
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-<h2>Register</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-</form>
+    <div class="register-page">
+        <div class="register-box">
+            <h2>Register</h2>
+            
+            <form method="post" id="registerForm">
+                {% csrf_token %}
+                
+                <h3>Select Your Role</h3>
+                <div class="role-selection">
+                    <label class="role-option">
+                        <input type="radio" name="role" value="engineer" onclick="toggleForm('engineer')" required>
+                        <img src="/static/3686930.png" alt="Engineer" class="role-img">
+                        Engineer
+                    </label>
+                    <label class="role-option">
+                        <input type="radio" name="role" value="management" onclick="toggleForm('management')" required>
+                        <img src="/static/3686930.png" alt="Management" class="role-img">
+                        Management
+                    </label>
+                </div>
+
+                <!-- Engineer Form (Initially Hidden) -->
+                <div id="engineerForm" style="display:none;">
+                    <h4>Engineer Sign Up</h4>
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" required><br>
+
+                    <label for="email">Email Address</label>
+                    <input type="email" name="email" id="email" required><br>
+
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required><br>
+
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" name="confirm_password" id="confirm_password" required><br>
+
+                    <button type="submit">Sign Up</button>
+                </div>
+
+                <!-- Management Form (Initially Hidden) -->
+                <div id="managementForm" style="display:none;">
+                    <h4>Management Sign Up</h4>
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" required><br>
+
+                    <label for="email">Email Address</label>
+                    <input type="email" name="email" id="email" required><br>
+
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required><br>
+
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" name="confirm_password" id="confirm_password" required><br>
+
+                    <label for="role">Select Your Role</label>
+                    <select name="role" id="role" required>
+                        <option value="team_leader">Team Leader</option>
+                        <option value="department_leader">Department Leader</option>
+                        <option value="senior_manager">Senior Manager</option>
+                    </select><br>
+
+                    <button type="submit">Sign Up</button>
+                </div>
+            </form>
+
+            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+            <p><a href="{% url 'home' %}">Back to Home</a></p>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm(role) {
+            // Hide both forms initially
+            document.getElementById('engineerForm').style.display = 'none';
+            document.getElementById('managementForm').style.display = 'none';
+
+            // Show the selected form
+            if (role === 'engineer') {
+                document.getElementById('engineerForm').style.display = 'block';
+            } else if (role === 'management') {
+                document.getElementById('managementForm').style.display = 'block';
+            }
+        }
+    </script>
 {% endblock %}
