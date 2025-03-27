@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <br></br>
+
     <h1>Welcome to Home Page</h1>
     <p><a href="{% url 'profile' %}">Go to Profile</a></p>
+    
     <!-- Logout Form (POST request) -->
     <form action="{% url 'logout' %}" method="POST">
         {% csrf_token %}
         <button type="submit">Logout</button>
     </form>
-    
 
     {% if user.is_authenticated %}
         <p>Hello, {{ user.username }}! You are logged in.</p>
