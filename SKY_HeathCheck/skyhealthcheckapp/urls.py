@@ -6,6 +6,6 @@ from skyhealthcheckapp import views as engineerLogin
 urlpatterns = [
  path('admin/', admin.site.urls),
  path('managerlogin/',managerLogin.managementLogin),
- path('engineerlogin/',engineerLogin.managementLogin),
+ path('engineerlogin/',engineerLogin.engineerLogin),
  
 ]
