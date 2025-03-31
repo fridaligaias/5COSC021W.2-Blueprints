@@ -6,7 +6,7 @@ from django.http import HttpResponse
 #Management and Engineer login functions
 
 def managementLogin(request):
-    return HttpResponse('<h1>Log In</h1>')
+    return render (request , 'management_login.html')
 
 def engineerLogin(request):
-    return HttpResponse('<h1>Log In</h1>')
+    return render (request , 'engineer_login.html')
