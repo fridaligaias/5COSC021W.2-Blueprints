@@ -4,6 +4,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth.models import User
   
 class Department(models.Model):
   departmentID = models.AutoField(primary_key = True, unique = True)
@@ -44,6 +45,7 @@ class Account(models.Model):
     SENIOR_MANAGER : "SENIOR MANAGER",
   }
   
+  # userID = models.OneToOneField(User, on_delete = models.CASCADE)
   departmentID = models.ForeignKey(Department, on_delete = models.CASCADE, default = "")
   accountCode = models.AutoField(primary_key = True, unique = True)
   name = models.CharField(max_length = 200, default = "")
