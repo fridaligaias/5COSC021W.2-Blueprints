@@ -45,7 +45,7 @@ class Account(models.Model):
     SENIOR_MANAGER : "SENIOR MANAGER",
   }
   
-  # userID = models.OneToOneField(User, on_delete = models.CASCADE)
+  userID = models.OneToOneField(User, on_delete = models.CASCADE, null = True)
   departmentID = models.ForeignKey(Department, on_delete = models.CASCADE, default = "")
   accountCode = models.AutoField(primary_key = True, unique = True)
   name = models.CharField(max_length = 200, default = "")
