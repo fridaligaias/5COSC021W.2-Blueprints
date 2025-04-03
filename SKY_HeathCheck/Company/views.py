@@ -6,7 +6,7 @@ from Company.forms import CreateUserForm
 # Create your views here.
 def HandleSignupForm(request):
   form = CreateUserForm()
-  if (request == 'POST'):
+  if (request.method == 'POST'):
     form = CreateUserForm(request.POST)
     
     if (form.is_valid()):
@@ -19,14 +19,15 @@ def HandleSignupForm(request):
       
       
       user = authenticate(username = username, 
-                          password = password, 
-                          email = email,
-                          first_name = first_name,
-                          last_name = last_name)
+                          password = password)
       
-      print(user)
+      user.first_name = first_name
+      user.last_name = last_name
+      user.email = email
       
-      login(request, user)
+      
+      if (user != None):
+        login(request, user)
       
   else:
     form = CreateUserForm()
