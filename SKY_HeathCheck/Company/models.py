@@ -32,31 +32,5 @@ class Session(models.Model):
   def __str__(self):
     return f"ID : {self.sessionID} | {self.sessionName} [{self.teamID.teamName}] > Start: {self.sessionStartData.date()} ~ End: {self.sessionEndData.date()}"
   
-class Account(models.Model):
-  ENGINEER = "ENGINEER"
-  TEAM_LEADER = "TEAM LEADER"
-  DEPARTMENT_LEADER = "DEPARTMENT LEADER"
-  SENIOR_MANAGER = "SENIOR MANAGER"
-  
-  EmployeeType = {
-    ENGINEER : "ENGINEER",
-    TEAM_LEADER : "TEAM LEADER",
-    DEPARTMENT_LEADER : "DEPARTMENT LEADER",
-    SENIOR_MANAGER : "SENIOR MANAGER",
-  }
-  
-  userID = models.OneToOneField(User, on_delete = models.CASCADE, null = True)
-  departmentID = models.ForeignKey(Department, on_delete = models.CASCADE, default = "")
-  accountCode = models.AutoField(primary_key = True, unique = True)
-  name = models.CharField(max_length = 200, default = "")
-  userName = models.CharField(max_length = 200, default = "")
-  emailAddress = models.EmailField(max_length = 254)
-  password = models.CharField(max_length = 254)
-  password = models.CharField(max_length = 254)
-  accountRole = models.CharField(max_length = 20, choices = EmployeeType, default = ENGINEER)
-  
-  def __str__(self):
-    return f"ID : {self.accountCode} | {self.name}"
-  
    
   
