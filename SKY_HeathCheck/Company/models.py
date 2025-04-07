@@ -32,5 +32,13 @@ class Session(models.Model):
   def __str__(self):
     return f"ID : {self.sessionID} | {self.sessionName} [{self.teamID.teamName}] > Start: {self.sessionStartData.date()} ~ End: {self.sessionEndData.date()}"
   
+class Account(models.Model):
+
+  accountID = models.OneToOneField(User, on_delete = models.CASCADE, null = True)
+  departmentID = models.ForeignKey(Department, on_delete = models.CASCADE, default = "")
+  
+  def __str__(self):
+    return f"ID : {self.accountID} | {self.accountID.first_name} {self.accountID.last_name}"
+  
    
   
