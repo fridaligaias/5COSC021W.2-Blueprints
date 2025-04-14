@@ -1,7 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 
 from Company.forms import CreateUserForm
+from Company.models import SessionCard
 
 # Create your views here.
 def HandleSignupForm(request):
@@ -35,3 +37,6 @@ def HandleSignupForm(request):
       
   
   return render(request, 'Company/SignupPage.html', {'form': form})
+
+def HandleDepartment(request, departmentName):
+  return HttpResponse(f"This is from the request from the department " + departmentName)
