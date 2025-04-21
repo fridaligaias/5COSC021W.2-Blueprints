@@ -1,0 +1,135 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+    color: #000;
+  }
+  
+  /* Header */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #f0f0f0;
+  }
+  /*logo fixed size*/
+  .logo img {
+    height: 40px;
+  }
+  /*adjust user details pinned to right*/
+  .user-info {
+    text-align: right;
+  }
+  /*adjust user details appearance*/
+  .user-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #0000cc;
+  }
+  /*adjust user details appearance*/
+  .role-name {
+    font-size: 1em;
+    font-weight: bold;
+    color: #0000cc;
+  }
+  .summary{
+    font-size: 1em;
+    font-weight: bold;
+    color: #0000cc;
+  }
+  
+  /* Container Layout */
+  .container {
+    display: flex;
+    height: calc(100vh - 70px);
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 200px;
+    background: #e4e4e4;
+    padding-top: 20px;
+  }
+  /**/
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  /*side bar list*/
+  .sidebar li {
+    padding: 10px 20px;
+    font-size: 1.1em;
+  }
+  /*hover*/
+  .sidebar .active {
+    background: #b8b4e4;
+  }
+  /**/
+  .sidebar a {
+    text-decoration: none;
+    color: #000;
+  }
+  
+  /* Main Content */
+  main {
+    flex: 1;
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+  }
+  
+  /* Left Section */
+  .left-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  /**/
+  .section-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0000cc;
+    margin-bottom: 10px;
+  }
+  
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* Right Section */
+  .right-section {
+    flex: 1;
+  }
+  
+  /* Placeholder Boxes */
+  .placeholder-box {
+    height: 100px;
+    background: #ddd;
+    border: 1px solid #ccc;
+  }
+  /*different sized box just for placebolder "overview"*/
+  .placeholder-box.large {
+    height: 300px;
+  }
+/* Start button */
+.start-button {
+    background: #0000cc;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2em;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    max-height: 60px;
+}
+/*hover */
+.start-button:hover {
+    background: #000099;
+}
