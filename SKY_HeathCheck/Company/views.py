@@ -34,9 +34,5 @@ def HandleSignupForm(request):
       
   else:
     form = CreateUserForm()
-      
-  
+    
   return render(request, 'Company/SignupPage.html', {'form': form})
-
-def HandleDepartment(request, departmentName):
-  return HttpResponse(f"This is from the request from the department " + departmentName)
