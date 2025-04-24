@@ -45,7 +45,7 @@ class Session(models.Model):
 class Account(models.Model):
 
   accountID = models.OneToOneField(User, on_delete = models.CASCADE, null = True)
-  departmentID = models.ForeignKey(Department, on_delete = models.CASCADE, default = "")
+  departmentID = models.ForeignKey(Department, on_delete = models.CASCADE, null = True)
   
   def __str__(self):
     return f"ID : {self.accountID} | {self.accountID.first_name} {self.accountID.last_name}"
@@ -76,12 +76,16 @@ class Vote(models.Model):
   comment = models.CharField(max_length = 200)
   
 @receiver(post_save, sender = Session)
-def SetSessionCards(sender, instance : Session, created, **kwargs):
+def SetSessionCards(sender, instance, created, **kwargs):
     department = instance.teamID.departmentID.departmentCards.all()
     SessionCard.objects.bulk_create([SessionCard(sessionID = instance, 
                                                  greenDescription = card.greenDescription,
                                                  amberDescription = card.amberDescription,
                                                  redDescription = card.redDescription) for card in department])
+    
+@receiver(post_save, sender = User)
+def SetAccountUser(sender, instance, created, **kwargs):
+  if (created): Account.objects.create(accountID = instance)
   
   
    

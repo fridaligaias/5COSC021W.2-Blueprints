@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Media Inspired UI</title>
+    {% comment %} <link rel="stylesheet" href="{% static 'style.css' %}"> {% endcomment %}
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <a href="Engineer.html">
+                <img src= , alt="Sky Logo">
+            </a>
+        </div>
+        <div class="user-info">
+            <div class="user-name">User Name</div>
+            <div class="role-name">Engineer</div>
+        </div>
+    </header>
+
+    <!-- Layout -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul>
+                <li class="active">Vote</li>
+                <li><a href="summary.html">Summary</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="vote-section">
+            <button class="start-button">Start voting</button>
+        </main>
+    </div>
+</body>
+</html>
+{% endblock %}

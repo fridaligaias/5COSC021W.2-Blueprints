@@ -1,11 +1,15 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.urls import reverse
 
 from Company.forms import CreateUserForm
-from Company.models import SessionCard
+from Company.models import Department, SessionCard
 
-# Create your views here.
+# Displays all of the necessary fields for a register/sign-up page
+# region signup/register pages
+
 def HandleSignupForm(request):
   form = CreateUserForm()
   
@@ -30,9 +34,35 @@ def HandleSignupForm(request):
       user.email = email
       user.groups.add(group)
             
-      if (user != None): login(request, user)
+      if (user != None): 
+        login(request, user)
+        
+        if (group.name == "Engineer"):
+          return redirect('engineer-profile', id = user.pk)
+        if (group.name == "Team Leader"):
+          return redirect('teamleader-profile')
+        else:
+          return redirect('teamleader-profile')
+        
       
   else:
     form = CreateUserForm()
     
   return render(request, 'Company/SignupPage.html', {'form': form})
+
+# endregion 
+
+
+
+
+def ValidUsersToVote(user):
+  voteGroups = ['Engineer']
+  return user.is_authenticated  and user.groups.filter(name__in = voteGroups).exists()
+
+@user_passes_test(ValidUsersToVote, login_url = "/company/sign-up/")
+@login_required
+def HandleChoosingSessions(request, id):
+  departments = Department.objects.all()
+  
+  content = {'departments' : departments}
+  return render(request, 'Company/Engineer.html', content)
