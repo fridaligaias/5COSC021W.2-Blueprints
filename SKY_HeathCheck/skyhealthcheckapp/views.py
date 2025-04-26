@@ -24,8 +24,8 @@ def register(request):
                     'error': f"The group '{selected_group}' does not exist. Please contact an admin.",
                 })
 
-            login(request, user)  # Automatically log in the user after registration
-            return redirect('dashboard')  # Redirect to dashboard page after successful registration
+            login(request, user)  # Automatically log in the user after sign up
+            return redirect('dashboard')  # Redirect to dashboard page after successful sign up
     else:
         form = UserRegistrationForm()
     return render(request, 'registration/register.html', {'form': form})
