@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import Group
-from django.contrib.auth.forms import UserRegistrationForm
 
 from Company.forms import CreateUserForm, SelectDepartment, SelectSession, SelectTeam, VotingForm
 from Company.models import SessionCard, Vote
@@ -36,10 +36,11 @@ def HandleSignupForm(request):
       user.account.save()
       
       if (user != None): 
-        login(request, user)
+        return redirect('log-in-department', userid = user.pk)
+        # login(request, user)
         
-        if (group.name == "Engineer"):
-          return redirect('sign-in-department', userid = user.pk)
+        # if (group.name == "Engineer"):
+        #   return redirect('log-in-department', userid = user.pk)
         
   else:
     signupForm = CreateUserForm()
@@ -48,32 +49,17 @@ def HandleSignupForm(request):
 
 # endregion 
 
-def register(request):
+def HandleLogin(request):
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
+        form = AuthenticationForm(request, data = request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])
-            user.save()
-
-            # Assign user to group after registration
-            selected_group = request.POST.get('role')
-            try:
-                group = Group.objects.get(name=selected_group)  # Check if the group exists
-                user.groups.add(group)
-            except Group.DoesNotExist:
-                # Handle the error gracefully
-                return render(request, 'registration/register.html', {
-                    'form': form,
-                    'error': f"The group '{selected_group}' does not exist. Please contact an admin.",
-                })
-
-            login(request, user)  # Automatically log in the user after sign up
-            return redirect('dashboard')  # Redirect to dashboard page after successful sign up
+            user = form.get_user()
+            
+            login(request, user)
+            return redirect('home')
     else:
-        form = UserRegistrationForm()
-    return render(request, 'registration/register.html', {'form': form})
-
+        form = AuthenticationForm()
+    return render(request, 'Company/login.html', {'form': form})
 
 def ValidUsersToVote(user):
   voteGroups = ['Engineer', 'Team Leader']
@@ -81,7 +67,7 @@ def ValidUsersToVote(user):
 
 @user_passes_test(ValidUsersToVote, login_url = "/company/sign-up/")
 @login_required
-def HandleSignupDepartmentForm(request, userid):
+def HandleLoginDepartmentForm(request, userid):
   departmentForm = SelectDepartment()
   
   if (request.method == 'POST'):
@@ -91,13 +77,13 @@ def HandleSignupDepartmentForm(request, userid):
       request.user.account.departmentID = department
       request.user.account.save()
       
-      return redirect('sign-in-team', userid = request.user.pk)
+      return redirect('log-in-team', userid = request.user.pk)
     
   return render(request, 'Company/SignupDepartmentPage.html', {'departmentForm': departmentForm} )
 
 @user_passes_test(ValidUsersToVote, login_url = "/company/sign-up/")
 @login_required
-def HandleSignupTeamForm(request, userid):
+def HandleLoginTeamForm(request, userid):
   teamForm = SelectTeam(departmentID = request.user.account.departmentID.departmentID)
   
   if (request.method == 'POST'):
