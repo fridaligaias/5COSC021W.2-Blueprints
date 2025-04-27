@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path("sign-up/", views.HandleSignupForm, name = 'sign-in'),
+    path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
     path("sign-up/<int:userid>/department", views.HandleSignupDepartmentForm, name = 'sign-in-department'),
     path("sign-up/<int:userid>/team", views.HandleSignupTeamForm, name = 'sign-in-team'),
     path("engineer/<int:userid>/<int:teamid>", views.HandleEngineerProfile, name = 'engineer-profile'),

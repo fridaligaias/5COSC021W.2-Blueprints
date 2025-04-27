@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.urls import reverse
+from django.contrib.auth.models import Group
+from django.contrib.auth.forms import UserRegistrationForm
 
 from Company.forms import CreateUserForm, SelectDepartment, SelectSession, SelectTeam, VotingForm
 from Company.models import SessionCard, Vote
@@ -46,10 +47,37 @@ def HandleSignupForm(request):
   return render(request, 'Company/SignupPage.html', {'signupForm': signupForm} )
 
 # endregion 
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+
+            # Assign user to group after registration
+            selected_group = request.POST.get('role')
+            try:
+                group = Group.objects.get(name=selected_group)  # Check if the group exists
+                user.groups.add(group)
+            except Group.DoesNotExist:
+                # Handle the error gracefully
+                return render(request, 'registration/register.html', {
+                    'form': form,
+                    'error': f"The group '{selected_group}' does not exist. Please contact an admin.",
+                })
+
+            login(request, user)  # Automatically log in the user after sign up
+            return redirect('dashboard')  # Redirect to dashboard page after successful sign up
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+
 def ValidUsersToVote(user):
   voteGroups = ['Engineer', 'Team Leader']
   return user.is_authenticated  and user.groups.filter(name__in = voteGroups).exists()
-
 
 @user_passes_test(ValidUsersToVote, login_url = "/company/sign-up/")
 @login_required
@@ -137,7 +165,7 @@ def HandleVoting(request, userid, teamid, sessionid):
 
         if total_votes >= total_cards:
           # User voted on all cards — redirect!
-          return redirect('engineer-profile')
+          return redirect('engineer-profile', userid = request.user.pk, teamid = teamid)
                 
   cards = SessionCard.objects.filter(sessionID = sessionid)
   forms_list = [VotingForm(initial={'session_card_id': card.sessionCardID}) for card in cards]
