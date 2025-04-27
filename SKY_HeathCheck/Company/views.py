@@ -36,7 +36,7 @@ def HandleSignupForm(request):
       user.account.save()
       
       if (user != None): 
-        return redirect('log-in-department', userid = user.pk)
+        return redirect('log-in', userid = user.pk)
         # login(request, user)
         
         # if (group.name == "Engineer"):
@@ -56,7 +56,8 @@ def HandleLogin(request):
             user = form.get_user()
             
             login(request, user)
-            return redirect('home')
+            if (request.user.groups.first().name == "Engineer"):
+              return redirect('log-in-department', userid = user.pk)
     else:
         form = AuthenticationForm()
     return render(request, 'Company/login.html', {'form': form})
