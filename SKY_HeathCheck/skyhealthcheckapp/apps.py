@@ -1,9 +1,9 @@
 from django.apps import AppConfig
 from django.contrib.auth.models import Group, User
 
-class TestappConfig(AppConfig):
+class SkyhealthceckappConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'testapp'
+    name = 'skyhealthcheckapp'
 
 def ready(self):
         group_names = ['Admin', 'Senior Manager', 'Department Leader', 'Team Leader', 'Engineer']
