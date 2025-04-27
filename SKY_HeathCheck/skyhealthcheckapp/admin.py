@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from skyheakthcheckapp.models import *
+from skyhealthcheckapp.models import *
 
 
 # Register your models here.
