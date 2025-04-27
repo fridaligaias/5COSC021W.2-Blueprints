@@ -11,8 +11,8 @@
 
     <!-- Link to your custom CSS file in the static folder -->
     <link href="{% static 'style.css' %}" rel="stylesheet">
-    
-    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="{% static 'Style.css' %}" rel="stylesheet">
+
 
     <title>Sky HealthCheck</title>
 </head>
@@ -20,10 +20,6 @@
     <img src="/static/Sky_Group_logo_2020.png" alt="Sky Group Logo" class="sky-logo">
 
     {% block content %}{% endblock %}
-    
-    <footer>
-        <p>Sky HealthCheck</p>
-    </footer>
 
     <!-- Bootstrap JS and dependencies (optional, for dropdowns, modals, etc.) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

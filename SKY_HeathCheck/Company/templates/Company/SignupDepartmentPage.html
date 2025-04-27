@@ -9,11 +9,10 @@
 
 <div class="register-page">
   <div class="register-box">
-      <h2>Register</h2>
+      <h2>Select Your Team</h2>
 
       <form method = 'POST'>
         {% csrf_token %}
-        {{ signupForm.as_p }} 
         {{ departmentForm.as_p }}
         <button type="submit">
       </form>

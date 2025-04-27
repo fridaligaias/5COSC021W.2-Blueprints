@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
   
 class Card(models.Model):
   cardID = models.CharField(primary_key = True, unique = True, max_length = 20)
+  cardImage = models.FileField(null = True)
   greenDescription = models.TextField(max_length = 150) 
   amberDescription = models.TextField(max_length = 150)
   redDescription = models.TextField(max_length = 150)    
@@ -54,13 +55,14 @@ class SessionCard(models.Model):
   sessionID = models.ForeignKey(Session, on_delete = models.CASCADE)
   
   sessionCardID = models.AutoField(primary_key = True, unique = True)
+  cardImage = models.FileField(null = True)
   greenVote = models.IntegerField(default = 0)
   amberVote = models.IntegerField(default = 0)
   redVote = models.IntegerField(default = 0)
   
-  greenDescription = models.CharField(max_length = 500, default = "")
-  amberDescription = models.CharField(max_length = 500, default = "")
-  redDescription = models.CharField(max_length = 500, default = "")
+  greenDescription = models.CharField(max_length = 150, default = "")
+  amberDescription = models.CharField(max_length = 150, default = "")
+  redDescription = models.CharField(max_length = 150, default = "")
   
   def __str__(self):
     return f"Team : {self.sessionID.sessionName} | {self.sessionCardID}"

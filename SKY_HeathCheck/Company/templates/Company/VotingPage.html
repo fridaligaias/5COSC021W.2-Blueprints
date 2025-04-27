@@ -1,0 +1,22 @@
+{% load static %}
+
+{% for card, form in forms_list %}
+    <div style="border: 1px solid #ccc; padding: 20px; margin-bottom: 20px;">
+        {% if card.cardImage %}
+            <img src="{{ card.cardImage.url }}" alt="Card Image" style="max-width: 200px;">
+        {% endif %}
+        <h3>Green: {{ card.greenVote }} ({{ card.greenDescription }})</h3>
+        <h3>Amber: {{ card.amberVote }} ({{ card.amberDescription }})</h3>
+        <h3>Red: {{ card.redVote }} ({{ card.redDescription }})</h3>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.vote_type.label_tag }} {{ form.vote_type }}
+            <br><br>
+            {{ form.comment.label_tag }} {{ form.comment }}
+            <br><br>
+            {{ form.session_card_id }}  <!-- hidden field -->
+            <button type="submit">Vote</button>
+        </form>
+    </div>
+{% endfor %}

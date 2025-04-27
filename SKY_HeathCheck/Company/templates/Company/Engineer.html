@@ -1,43 +1,48 @@
-{% extends "base.html" %}
+{% load static %}
 
 {% block content%}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sky Media Inspired UI</title>
-    {% comment %} <link rel="stylesheet" href="{% static 'style.css' %}"> {% endcomment %}
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="logo">
-            <a href="Engineer.html">
-                <img src= , alt="Sky Logo">
-            </a>
-        </div>
-        <div class="user-info">
-            <div class="user-name">User Name</div>
-            <div class="role-name">Engineer</div>
-        </div>
-    </header>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sky Media Inspired UI</title>
+        <link rel="stylesheet" href="{% static 'Styles.css' %}">
+    </head>
+    <body>
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <a href="Engineer.html">
+                    <img src= "{% static 'Sky_Group_logo_2020.png' %}", alt="Sky Logo">
+                </a>
+            </div>
+            <div class="user-info">
+                <div class="user-name"> {{ username}} </div>
+                <div class="role-name">Engineer</div>
+            </div>
+        </header>
 
-    <!-- Layout -->
-    <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <ul>
-                <li class="active">Vote</li>
-                <li><a href="summary.html">Summary</a></li>
-            </ul>
-        </aside>
+        <!-- Layout -->
+        <div class="container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <ul>
+                    <li class="active">Vote</li>
+                    <li><a href="summary.html">Summary</a></li>
+                </ul>
+            </aside>
 
-        <!-- Main Content -->
-        <main class="vote-section">
-            <button class="start-button">Start voting</button>
-        </main>
-    </div>
-</body>
-</html>
+            <!-- Main Content -->
+            <main class="vote-section">
+                <form method="post">
+                    {% csrf_token %}
+                    <label for="id_session">Session</label>
+                    {{ sessionForm.session }}
+                    <Button type="submit" name = "sessionButton" value="sessionButton" /> 
+                </form>
+            </main>
+        </div>
+    </body>
+    </html>
 {% endblock %}
