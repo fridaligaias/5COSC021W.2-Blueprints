@@ -36,11 +36,7 @@ def HandleSignupForm(request):
       user.account.save()
       
       if (user != None): 
-        return redirect('log-in', userid = user.pk)
-        # login(request, user)
-        
-        # if (group.name == "Engineer"):
-        #   return redirect('log-in-department', userid = user.pk)
+        return redirect('log-in')
         
   else:
     signupForm = CreateUserForm()
@@ -60,7 +56,7 @@ def HandleLogin(request):
               return redirect('log-in-department', userid = user.pk)
     else:
         form = AuthenticationForm()
-    return render(request, 'Company/login.html', {'form': form})
+    return render(request, 'Company/LoginPage.html', {'form': form})
 
 def ValidUsersToVote(user):
   voteGroups = ['Engineer', 'Team Leader']

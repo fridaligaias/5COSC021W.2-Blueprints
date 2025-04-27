@@ -15,8 +15,9 @@
         {% csrf_token %}
         {{ signupForm.as_p }} 
         {{ departmentForm.as_p }}
-        <button type="submit">
+        <button type="submit"> Register </button>
       </form>
+      <p> Already have an account? <a href="{% url 'log-in' %}"> Log in </a></p>
    </div>
  </div>
 {% endblock %}

@@ -1,27 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
+{% extends "base.html" %}
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-        <p><a href="login.html">Forgot password</p> <!--Login html is a placeholder for forgot password-->
-        <button type="submit">Login</button>
-    </form>
-
-    {% if form.errors %}
-    <p style="color: red;">Invalid username or password. Please try again.</p>
-    <p>Debug info: {{ form.errors }}</p>
-{% endif %}
-
-
-    <p>No account? <a href="{% url 'register' %}">Sign Up</a></p>
-</body>
-</html>
+{% block content %}
+    <div class="login-page">
+        <div class="login-box">
+            <h1>Login</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+            </form>
+            <p>  Don't have an account? <a href="{% url 'sign-in' %}"> Sign up </a></p>
+            <p> <a href="{% url 'sign-in' %}"> Forgot password </a></p>
+        </div>
+    </div>
+{% endblock %}
