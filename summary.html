@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,12 +16,10 @@
             </a>
         </div>
         <div class="user-info">
-            <div class="user-name">User Name</div>
+            <div class="user-name">{{ firstname }}</div>
             <div class="role-name">Engineer</div>
         </div>
     </header>
-
-    <!-- Layout -->
     <div class="container">
         <!-- Sidebar -->
         <aside class="sidebar">
@@ -31,12 +30,40 @@
         </aside>
 
         <!-- Main Content -->
-        <main>
-            <div class="right-section">
-                <div class="section-title">Summary</div>
-                <div class="placeholder-box large"></div>
-              </div>
-        </main>
+    <main>
+      <div class="right-section">
+        <div class="section-title">Your Vote Summary</div>
+
+        {% if user_votes %}
+        <table>
+          <thead>
+            <tr>
+              <th>Vote ID</th>
+              <th>Card ID</th>
+              <th>Green</th>
+              <th>Amber</th>
+              <th>Red</th>
+              <th>Comment</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for vote in user_votes %}
+            <tr>
+              <td>{{ vote.voteCode }}</td>
+              <td>{{ vote.sessionCardID.sessionCardID }}</td>
+              <td>{{ vote.greenVote }}</td>
+              <td>{{ vote.amberVote }}</td>
+              <td>{{ vote.redVote }}</td>
+              <td>{{ vote.comment }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+
+      </div>
+    </main>
+
     </div>
 </body>
 </html>
