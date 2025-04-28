@@ -1,0 +1,109 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sky Media – Vote Page</title>
+  <link rel="stylesheet" href="{% static 'css/Styles.css' %}" />
+</head>
+
+<body>
+    <!-- Header: logo on the left, user info on the right -->
+    <header>
+      <div class="logo">
+          <img src="{% static 'images/sky logo.webp' %}" alt="Sky Logo" />
+      </div>
+      <div class="user-info">
+        <!-- Display the logged-in user’s first name -->
+        <div class="user-name">{{ user.first_name }}</div>
+        <div class="role-name">Engineer</div>
+      </div>
+    </header>
+  
+    <div class="container">
+      <!-- Sidebar navigation -->
+      <aside class="sidebar">
+        <ul>
+          <li class="active">
+            {# Active page: Vote #}
+            <a href="{% url 'engineer' %}">Vote</a>
+          </li>
+          <li>
+            <a href="{% url 'summary' %}">Summary</a>
+          </li>
+        </ul>
+      </aside>
+  
+      <!-- dynamic vote cards -->
+      <main>
+        <div class="right-section">
+  
+          <!-- Page heading -->
+          <div class="section-title">Votes</div>
+  
+          {# Iterate over each (card, form) tuple passed from the view #}
+          {% for card, form in forms_list %}
+          <div class="vote-card" style="border:1px solid #ccc; padding:20px; margin-bottom:20px;">
+  
+            {# Show the card image if it exists #}
+            {% if card.cardImage %}
+            <div class="card-image" style="margin-bottom:10px;">
+              <img 
+                src="{{ card.cardImage.url }}" 
+                alt="Card {{ card.cardID }}" 
+                style="max-width:100%;" 
+              />
+            </div>
+            {% endif %}
+  
+            {# Summarize existing votes with descriptions #}
+            <h3>
+              Green: {{ card.greenVote }}
+              <small>({{ card.greenDescription }})</small>
+            </h3>
+            <h3>
+              Amber: {{ card.amberVote }}
+              <small>({{ card.amberDescription }})</small>
+            </h3>
+            <h3>
+              Red: {{ card.redVote }}
+              <small>({{ card.redDescription }})</small>
+            </h3>
+  
+            <!-- Voting form for this specific card -->
+            <form method="post" style="margin-top:15px;">
+              {% csrf_token %}  {# Protect against cross-site request forgery #}
+  
+              {# Choice field widget for green/amber/red votes #}
+              <div class="form-group">
+                {{ form.vote_type.label_tag }}
+                {{ form.vote_type }}
+              </div>
+  
+              {# Textarea for user comments #}
+              <div class="form-group" style="margin-top:10px;">
+                {{ form.comment.label_tag }}
+                {{ form.comment }}
+              </div>
+  
+              {# Hidden field to pass the session_card_id back to the view #}
+              {{ form.session_card_id }}
+  
+              {# Submit button labeled with the card’s ID #}
+              <button type="submit" class="start-button" style="margin-top:15px;">
+                Vote on {{ card.cardID }}
+              </button>
+            </form>
+          </div>
+          {% empty %}
+          <!-- Fallback message if there are no cards to show -->
+          <p>No cards available to vote on.</p>
+          {% endfor %}
+  
+        </div>
+      </main>
+    </div>
+  </body>
+  </html>
