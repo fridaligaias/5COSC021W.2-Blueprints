@@ -1,10 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sky Media Inspired UI</title>
-    <link rel="stylesheet" href="css/Styles.css">
+    <link rel="stylesheet" href="{% static 'Styles.css' %}">
 </head>
 <body>
     <!-- Header -->
@@ -12,7 +14,7 @@
         <!-- logo -->
         <div class="logo">
             <a href="TeamLeader.html">
-                <img src="images/sky logo.webp" alt="Sky Logo">
+                <img src= "{% static 'Sky_Group_logo_2020.png' %}", alt="Sky Logo">
             </a>
         </div>
         <div class="user-info">
@@ -24,17 +26,16 @@
     <!-- Layout -->
     <div class="container">
         <!-- Sidebar -->
-        <aside class="sidebar">
-            <ul>
-                <li class="active">Vote</li>
-                <li><a href="teams.html">Teams</a></li>
-            </ul>
-        </aside>
 
         <!-- Main Content -->
-        <main class="vote-section">
-            <button class="start-button">Start voting</button>
-        </main>
+            <main class="vote-section">
+                <form method="post">
+                    {% csrf_token %}
+                    <label for="id_session">Session</label>
+                    {{ sessionForm.session }}
+                    <Button type="submit" name = "sessionButton" value="sessionButton" class="start-button"/> 
+                </form>
+            </main>
     </div>
 </body>
 </html>

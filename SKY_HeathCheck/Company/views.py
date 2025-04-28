@@ -60,10 +60,14 @@ def HandleLogin(request):
             login(request, user)
             if (request.user.groups.first().name == "Engineer"):
               return redirect('log-in-department', userid = user.pk)
-            if (request.user.groups.first().name == "Team Leader"):
+            elif (request.user.groups.first().name == "Team Leader"):
               return redirect('log-in-department', userid = user.pk)
-            if (request.user.groups.first().name == "DepartmentLeader"):
+            elif (request.user.groups.first().name == "DepartmentLeader"):
               return redirect('log-in-department', userid = user.pk)
+            #TODO - redirect the SM to their home page
+            # elif (request.user.groups.first().name == "Senior Manager"):
+            #   return redirect('log-in-department', userid = user.pk)
+            
     else:
         form = AuthenticationForm()
     return render(request, 'Company/LoginPage.html', {'form': form})
@@ -169,9 +173,27 @@ def reset_password(request):
 
 def ValidUsersToVote(user):
   voteGroups = ['Engineer', 'Team Leader']
-  return user.is_authenticated  and user.groups.filter(name__in = voteGroups).exists()
+  return user.is_authenticated and user.groups.filter(name__in = voteGroups).exists()
+def ValidUsersToDepartmentLogin(user):
+  voteGroups = ['Engineer', 'Team Leader', 'Department Leader']
+  return user.is_authenticated and user.groups.filter(name__in = voteGroups).exists()
+def ValidUsersToTeamLogin(user):
+  voteGroups = ['Engineer', 'Team Leader']
+  return user.is_authenticated and user.groups.filter(name__in = voteGroups).exists()
+def ValidEngineer(user):
+  voteGroups = ['Engineer']
+  return user.is_authenticated and user.groups.filter(name__in = voteGroups).exists()
+def ValidTeamLeader(user):
+  voteGroups = ['Team Leader']
+  return user.is_authenticated and user.groups.filter(name__in = voteGroups).exists()
+def ValidEngineer(user):
+  voteGroups = ['Department Leader']
+  return user.is_authenticated and user.groups.filter(name__in = voteGroups).exists()
+def ValidEngineer(user):
+  voteGroups = ['Senior Manager']
+  return user.is_authenticated and user.groups.filter(name__in = voteGroups).exists()
 
-@user_passes_test(ValidUsersToVote, login_url = "/company/sign-up/")
+@user_passes_test(ValidUsersToDepartmentLogin, login_url = "/company/sign-up/")
 @login_required
 def HandleLoginDepartmentForm(request, userid):
   departmentForm = SelectDepartment()
@@ -183,11 +205,17 @@ def HandleLoginDepartmentForm(request, userid):
       request.user.account.departmentID = department
       request.user.account.save()
       
-      return redirect('log-in-team', userid = request.user.pk)
+      if (request.user.groups.first().name == "Engineer"):
+        return redirect('log-in-team', userid = request.user.pk)
+      elif (request.user.groups.first().name == "Team Leader"):
+        return redirect('log-in-team', userid = request.user.pk)
+      #TODO - Redirect to department leaderhome page
+      # elif (request.user.groups.first().name == "DepartmentLeader"):
+      #   return redirect('log-in-department', userid = request.user.pk)
     
   return render(request, 'Company/SignupDepartmentPage.html', {'departmentForm': departmentForm} )
 
-@user_passes_test(ValidUsersToVote, login_url = "/company/sign-up/")
+@user_passes_test(ValidUsersToTeamLogin, login_url = "/company/sign-up/")
 @login_required
 def HandleLoginTeamForm(request, userid):
   teamForm = SelectTeam(departmentID = request.user.account.departmentID.departmentID)
@@ -197,11 +225,14 @@ def HandleLoginTeamForm(request, userid):
     if (teamForm.is_valid()):
       team = teamForm.cleaned_data['team']
       
-      return redirect('engineer-profile', userid = request.user.pk, teamid = team.teamID)
+      if (request.user.groups.first().name == "Engineer"):
+        return redirect('engineer-profile', userid = request.user.pk, teamid = team.teamID)
+      elif (request.user.groups.first().name == "Team Leader"):
+        return redirect('team-leader-profile', userid = request.user.pk, teamid = team.teamID)
     
   return render(request, 'Company/SignupTeamPage.html', {'teamForm': teamForm} )
 
-@user_passes_test(ValidUsersToVote, login_url = "/company/sign-up/")
+@user_passes_test(ValidEngineer, login_url = "/company/sign-up/")
 @login_required
 def HandleEngineerProfile(request, userid, teamid):
     username = request.user.username
@@ -220,6 +251,46 @@ def HandleEngineerProfile(request, userid, teamid):
    
 		}
     return render(request, 'Company/Engineer.html', context)
+  
+@user_passes_test(ValidTeamLeader, login_url = "/company/sign-up/")
+@login_required
+def HandleTeamLeaderProfile(request, userid, teamid):
+    username = request.user.username
+    sessionForm = SelectSession(teamID = teamid)
+    
+    if (request.method == 'POST'):
+      sessionForm = SelectSession(request.POST, teamID = teamid)
+      if (sessionForm.is_valid()):
+        session = sessionForm.cleaned_data['session']
+        
+        return redirect('voting-form', userid = userid, teamid = teamid, sessionid = session.sessionID)
+      
+    context = {
+			'username': username,
+   		'sessionForm': sessionForm,
+   
+		}
+    return render(request, 'Company/TeamLeader.html', context)
+  
+@user_passes_test(ValidTeamLeader, login_url = "/company/sign-up/")
+@login_required
+def HandleDepartmentLeaderProfile(request, userid, teamid):
+    username = request.user.username
+    sessionForm = SelectSession(teamID = teamid)
+    
+    if (request.method == 'POST'):
+      sessionForm = SelectSession(request.POST, teamID = teamid)
+      if (sessionForm.is_valid()):
+        session = sessionForm.cleaned_data['session']
+        
+        return redirect('voting-form', userid = userid, teamid = teamid, sessionid = session.sessionID)
+      
+    context = {
+			'username': username,
+   		'sessionForm': sessionForm,
+   
+		}
+    return render(request, 'Company/TeamLeader.html', context)
   
 @user_passes_test(ValidUsersToVote, login_url = "/company/sign-up/")
 @login_required
