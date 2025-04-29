@@ -827,35 +827,16 @@ def team_leader_dashboard(request, teamid):
     
 
 @login_required
-def summary(request, userid):
-    # Get the currently logged-in user
-    user = request.user
+def summary_view(request):
+    
+    # 1. Grab the first name for the header
+    firstname = request.user.first_name
 
-    # Look up the department this user belongs to
-    your_dept = user.account.departmentID
+    # 2. Fetch all Vote records for this user
+    user_votes = Vote.objects.filter(user=request.user).select_related('sessionCardID')
 
-    # Fetch all departments except the user's own
-    other_departments = Department.objects.exclude(pk=your_dept.pk)
-
-    # Annotate each team with its average votes across all sessions
-    teams = Team.objects.annotate(
-        green_avg=Avg('session__sessioncard__greenVote'),
-        amber_avg=Avg('session__sessioncard__amberVote'),
-        red_avg=Avg('session__sessioncard__redVote'),
-    )
-
-    # Compute the overall average votes across all Vote records
-    overall = Vote.objects.aggregate(
-        green_avg=Avg('greenVote'),
-        amber_avg=Avg('amberVote'),
-        red_avg=Avg('redVote'),
-    )
-
-    # Render the summary template, passing in user, departments, teams, and overall stats
-    return render(request, 'Company/summary.html', {
-        'user': user,
-        'departments': other_departments,
-        'teams': teams,
-        'overall': overall,
-        'userid': userid,
+    # 3. Render 'summary.html' with exactly the context your template uses
+    return render(request, 'summary.html', {
+        'firstname': firstname,
+        'user_votes': user_votes,
     })
