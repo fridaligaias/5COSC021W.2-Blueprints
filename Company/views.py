@@ -66,8 +66,6 @@ def HandleLogin(request):
     
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             
@@ -79,11 +77,11 @@ def HandleLogin(request):
             if user_group == "Department Leader":
                 try:
                     # Get the user's department ID
-                    account = Account.objects.get(accountID=user)
-                    department_id = account.departmentID.departmentID
+                    # account = Account.objects.get(accountID=user)
+                    # department_id = account.departmentID.departmentID
                     
                     # Redirect directly to department leader dashboard with the user's department
-                    return redirect('department_leader_dashboard_with_id', dept_id=department_id)
+                    return redirect('log-in-department', userid=user.pk)
                 
                 except Account.DoesNotExist:
                     messages.error(request, "Account not found. Please contact an administrator.")
@@ -271,7 +269,7 @@ def HandleLoginDepartmentForm(request, userid):
         return redirect('log-in-team', userid = request.user.pk)
       elif (request.user.groups.first().name == "Department Leader"):
         # Redirect department leader to dashboard
-        return redirect('department_leader_redirect')
+        return redirect('department_leader_dashboard_with_id', dept_id= request.user.account.departmentID.departmentID)
     
   return render(request, 'Company/SignupDepartmentPage.html', {'departmentForm': departmentForm} )
 
