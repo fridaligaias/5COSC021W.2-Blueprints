@@ -12,13 +12,13 @@ def register(request):
             user.set_password(form.cleaned_data['password'])
             user.save()
 
-            # Assign user to group after registration
+            # Assign user to role after registration
             selected_group = request.POST.get('role')
             try:
-                group = Group.objects.get(name=selected_group)  # Check if the group exists
+                group = Group.objects.get(name=selected_group)  # Check if the group/role exists
                 user.groups.add(group)
             except Group.DoesNotExist:
-                # Handle the error gracefully
+         
                 return render(request, 'registration/register.html', {
                     'form': form,
                     'error': f"The group '{selected_group}' does not exist. Please contact an admin.",
@@ -32,7 +32,7 @@ def register(request):
 
 @login_required
 def dashboard(request):
-    # Check user's group/role and redirect to the corresponding dashboard
+    # Checking user's group/role and redirect to the corresponding dashboard
     if request.user.groups.filter(name='Admin').exists():
         return redirect('admin_dashboard')
     elif request.user.groups.filter(name='Senior Manager').exists():
@@ -43,7 +43,8 @@ def dashboard(request):
         return redirect('teamLeader_dashboard')
     else:
         return redirect('engineer_dashboard')
-    
+
+# Each dashboard redirect
 @login_required
 def admin_dashboard(request):
     return render(request, 'dashboards/admin.html')
