@@ -1,21 +1,21 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Sky Media Inspired UI</title>
-    <link rel="stylesheet" href="css/Styles.css" />
+    <link rel="stylesheet" href="{% static 'css/Styles.css' %}" />
 </head>
 <body>
     <!-- Header -->
     <header>
         <div class="logo">
-            <a href="department.html">
-                <img src="images/sky logo.webp" alt="Sky Logo" />
+                <img src="{% static 'images/sky logo.webp' %}" alt="Sky Logo" />
             </a>
         </div>
         <div class="user-info">
-            <div class="user-name">User Name</div>
+            <div class="user-name"{{ user.first_name }}</div>
             <div class="role-name">Department Leader</div>
         </div>
     </header>
