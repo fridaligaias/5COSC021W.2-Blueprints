@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="login-page">
+        <div class="login-box">
+            <h1>Login</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+            </form>
+            <p>  Don't have an account? <a href="{% url 'sign-in' %}"> Sign up </a></p>
+            <p> <a href="{% url 'sign-in' %}"> Forgot password </a></p>
+        </div>
+    </div>
+
+    <script>
+        window.onpageshow = function(event) {
+            if (event.persisted) {
+                window.location.href = "{% url 'log-in' %}";
+            }
+        };
+    
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.pushState(null, null, location.href);
+            window.location.href = "{% url 'log-in' %}";
+        };
+    </script>
+{% endblock %}

@@ -1,0 +1,325 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky - Team Leader Summary</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static '/summary/summary.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col">
+                    <img src="{% static 'Sky_Group_logo_2020.png' %}" alt="Sky Group Logo" class="sky-logo">
+                </div>
+                <div class="col text-end">
+                    <svg width="60" height="30" viewBox="0 0 60 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.5 5C10.2533 5 6 9.2533 6 14.5C6 19.7467 10.2533 24 15.5 24H44.5C49.7467 24 54 19.7467 54 14.5C54 9.2533 49.7467 5 44.5 5H15.5Z" fill="#FF3366"/>
+                        <path d="M17.5 10.5V18.5H20V15.8333H21.1667C22.9167 15.8333 24 14.9167 24 13.1667C24 11.4167 22.9167 10.5 21.1667 10.5H17.5ZM20 13.6667V12.6667H20.8333C21.3333 12.6667 21.5 12.8333 21.5 13.1667C21.5 13.5 21.3333 13.6667 20.8333 13.6667H20Z" fill="white"/>
+                        <path d="M25 10.5V18.5H27.5L27.6667 17.8333C28 18.3333 28.5833 18.6667 29.3333 18.6667C30.9167 18.6667 32 17.4167 32 14.75C32 12.25 31 10.3333 29.25 10.3333C28.5833 10.3333 28 10.6667 27.6667 11.1667L27.5 10.5H25ZM27.5 14.6667C27.5 13.5 27.8333 12.8333 28.4167 12.8333C29 12.8333 29.3333 13.5 29.3333 14.5833C29.3333 15.8333 29 16.1667 28.4167 16.1667C27.8333 16.1667 27.5 15.6667 27.5 14.6667Z" fill="white"/>
+                        <path d="M38 11.8333L37.6667 10.5H35.1667V18.5H37.8333V14.4167C37.8333 13.5 38.8333 13.1667 39.4167 13.1667L40 13.25L40.3333 10.5833C39.5 10.4167 38.5 10.8333 38 11.8333Z" fill="white"/>
+                    </svg>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-danger ms-3">
+                        <i class="bi bi-box-arrow-right me-1"></i>Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main content -->
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="page-title">Team Leader Dashboard</h1>
+                    <p class="text-muted">Welcome back, {{ user_full_name }}</p>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#teamMembersModal">
+                        <i class="bi bi-people-fill me-1"></i>
+                        View Team Members
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Team Information -->
+            <div class="team-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h2><i class="bi bi-people me-2"></i>{{ team.teamName }}</h2>
+                        <p class="text-muted mb-0">Department: {{ department.departmentName }}</p>
+                    </div>
+                    <div class="col-auto">
+                        <span class="badge bg-secondary">{{ members_count }} members</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Team Statistics -->
+            <div class="row team-stats">
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <div class="stat-title">Sessions</div>
+                        <div class="stat-value">{{ sessions_count }}</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-card-list"></i>
+                        </div>
+                        <div class="stat-title">Cards</div>
+                        <div class="stat-value">{{ cards_count }}</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                        <div class="stat-title">Votes</div>
+                        <div class="stat-value">{{ votes_count }}/{{ possible_votes }}</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-pie-chart"></i>
+                        </div>
+                        <div class="stat-title">Completion</div>
+                        <div class="stat-value">{{ completion|floatformat:1 }}%</div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" 
+                                style="width: {{ completion }}%;" 
+                                aria-valuenow="{{ completion }}" 
+                                aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sessions -->
+            <h3 class="mb-4">Sessions</h3>
+            
+            {% if sessions %}
+                <div class="accordion" id="accordionSessions">
+                    {% for session_data in sessions %}
+                        <div class="accordion-item session-card mb-3">
+                            <h4 class="accordion-header" id="heading-{{ session_data.session.sessionID }}">
+                                <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" 
+                                        data-bs-toggle="collapse" 
+                                        data-bs-target="#collapse-{{ session_data.session.sessionID }}" 
+                                        aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" 
+                                        aria-controls="collapse-{{ session_data.session.sessionID }}">
+                                    <i class="bi bi-calendar-check me-2"></i>
+                                    {{ session_data.session.sessionName }} 
+                                    <span class="ms-auto badge bg-info">
+                                        {{ session_data.actual_votes }} / {{ session_data.potential_total_votes }} votes ({{ session_data.completion_percentage|floatformat:1 }}%)
+                                    </span>
+                                </button>
+                            </h4>
+                            <div id="collapse-{{ session_data.session.sessionID }}" 
+                                 class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" 
+                                 aria-labelledby="heading-{{ session_data.session.sessionID }}"
+                                 data-bs-parent="#accordionSessions">
+                                <div class="accordion-body">
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" 
+                                                    style="width: {{ session_data.completion_percentage }}%;" 
+                                                    aria-valuenow="{{ session_data.completion_percentage }}" 
+                                                    aria-valuemin="0" aria-valuemax="100">
+                                                    {{ session_data.completion_percentage|floatformat:1 }}%
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 10%">Card ID</th>
+                                                    <th style="width: 20%">Green Description</th>
+                                                    <th style="width: 20%">Amber Description</th>
+                                                    <th style="width: 20%">Red Description</th>
+                                                    <th style="width: 30%">Vote Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for card in session_data.cards_data %}
+                                                    <tr>
+                                                        <td>{{ card.card_id }}</td>
+                                                        <td>{{ card.green_description }}</td>
+                                                        <td>{{ card.amber_description }}</td>
+                                                        <td>{{ card.red_description }}</td>
+                                                        <td>
+                                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                                <div class="d-flex">
+                                                                    <span class="badge bg-success me-1" data-bs-toggle="tooltip" title="Green Votes">
+                                                                        {{ card.green_votes }}
+                                                                    </span>
+                                                                    <span class="badge bg-warning me-1" data-bs-toggle="tooltip" title="Amber Votes">
+                                                                        {{ card.amber_votes }}
+                                                                    </span>
+                                                                    <span class="badge bg-danger" data-bs-toggle="tooltip" title="Red Votes">
+                                                                        {{ card.red_votes }}
+                                                                    </span>
+                                                                </div>
+                                                                <span class="ms-2 small">
+                                                                    {{ card.voters_count }} / {{ members_count }} voted
+                                                                </span>
+                                                            </div>
+                                                            
+                                                            <!-- Progress bar showing percentage of team members who voted -->
+                                                            <div class="progress" style="height: 8px;">
+                                                                <div class="progress-bar" role="progressbar" 
+                                                                    style="width: {{ card.voters_percentage }}%;" 
+                                                                    aria-valuenow="{{ card.voters_percentage }}" 
+                                                                    aria-valuemin="0" aria-valuemax="100">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <!-- Show number of pending votes -->
+                                                            <div class="text-end mt-1">
+                                                                <small class="text-muted">
+                                                                    {% if card.pending_votes > 0 %}
+                                                                        {{ card.pending_votes }} members pending
+                                                                    {% else %}
+                                                                        All members voted
+                                                                    {% endif %}
+                                                                </small>
+                                                            </div>
+                                                            
+                                                            <!-- Vote details button -->
+                                                            <div class="text-end mt-2">
+                                                                <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#voterDetails-{{ card.card_id }}">
+                                                                    <i class="bi bi-info-circle me-1"></i>Vote Details
+                                                                </button>
+                                                            </div>
+                                                            
+                                                            <!-- Collapsible vote details -->
+                                                            <div class="collapse mt-2" id="voterDetails-{{ card.card_id }}">
+                                                                <div class="card card-body bg-light">
+                                                                    {% if card.voters %}
+                                                                        <ul class="list-group list-group-flush">
+                                                                            {% for voter in card.voters %}
+                                                                                <li class="list-group-item bg-transparent px-0">
+                                                                                    <div class="d-flex justify-content-between align-items-start">
+                                                                                        <div>
+                                                                                            <strong>{{ voter.full_name }}</strong>
+                                                                                            <span class="badge {% if voter.vote_type == 'Green' %}bg-success{% elif voter.vote_type == 'Amber' %}bg-warning{% else %}bg-danger{% endif %} ms-1">
+                                                                                                {{ voter.vote_type }}
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    {% if voter.comment %}
+                                                                                        <div class="mt-1">
+                                                                                            <small class="text-muted">{{ voter.comment }}</small>
+                                                                                        </div>
+                                                                                    {% endif %}
+                                                                                </li>
+                                                                            {% endfor %}
+                                                                        </ul>
+                                                                    {% else %}
+                                                                        <p class="mb-0 text-muted">No votes yet.</p>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>
+                    No sessions found for this team.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Team Members Modal -->
+    <div class="modal fade" id="teamMembersModal" tabindex="-1" aria-labelledby="teamMembersModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="teamMembersModalLabel">Team Members</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% if member_list %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for member in member_list %}
+                                        <tr>
+                                            <td>{{ member.full_name }}</td>
+                                            <td>{{ member.username }}</td>
+                                            <td>{{ member.email }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="mb-0">No team members found.</p>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Sky Assessment</h5>
+                    <p>Monitor team assessment progress in real-time.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2025 Sky Group</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+</body>
+</html>

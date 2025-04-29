@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary</title>
+    <link rel="stylesheet" href="{% static 'Styles.css' %}" />
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <a href="engineer.html">
+              <img src="{% static 'Sky_Group_logo_2020.png' %}" alt="Sky Group Logo" class="sky-logo">
+            </a>
+        </div>
+        <div class="user-info">
+            <div class="user-name">{{ firstname }}</div>
+            <div class="role-name">Engineer</div>
+        </div>
+    </header>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul>
+                <li onclick="window.location.href='templates/engineer.html'">Vote</li>
+                <li onclick="window.location.href='templates/summary.html'">Summary</li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+    <main>
+      <div class="right-section">
+        <div class="section-title">Your Vote Summary</div>
+
+        {% if user_votes %}
+        <table>
+          <thead>
+            <tr>
+              <th>Vote ID</th>
+              <th>Card ID</th>
+              <th>Green</th>
+              <th>Amber</th>
+              <th>Red</th>
+              <th>Comment</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for vote in user_votes %}
+            <tr>
+              <td>{{ vote.voteCode }}</td>
+              <td>{{ vote.sessionCardID.sessionCardID }}</td>
+              <td>{{ vote.greenVote }}</td>
+              <td>{{ vote.amberVote }}</td>
+              <td>{{ vote.redVote }}</td>
+              <td>{{ vote.comment }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+
+      </div>
+    </main>
+
+    </div>
+</body>
+</html>

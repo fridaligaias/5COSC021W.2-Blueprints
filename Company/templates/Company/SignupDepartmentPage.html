@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  .helptext {
+    display: block;
+  }
+</style>
+
+<div class="register-page">
+  <div class="register-box">
+      <h2>Select Your Team</h2>
+
+      <form method = 'POST'>
+        {% csrf_token %}
+        {{ departmentForm.as_p }}
+        <button type="submit">
+      </form>
+   </div>
+ </div>
+{% endblock %}
