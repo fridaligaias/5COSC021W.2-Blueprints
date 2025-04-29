@@ -306,6 +306,8 @@ def HandleEngineerProfile(request, userid, teamid):
     context = {
         'username': username,
         'sessionForm': sessionForm,
+        'userid': userid,
+        'teamid': teamid,
     }
     return render(request, 'Company/Engineer.html', context)
   
@@ -827,16 +829,16 @@ def team_leader_dashboard(request, teamid):
     
 
 @login_required
-def summary_view(request):
+def summary_view(request, userid, teamid):
     
     # 1. Grab the first name for the header
     firstname = request.user.first_name
 
     # 2. Fetch all Vote records for this user
-    user_votes = Vote.objects.filter(user=request.user).select_related('sessionCardID')
+    user_votes = Vote.objects.filter(userID=request.user).select_related('sessionCardID')
 
     # 3. Render 'summary.html' with exactly the context your template uses
-    return render(request, 'summary.html', {
+    return render(request, 'Company/summary.html', {
         'firstname': firstname,
         'user_votes': user_votes,
     })
