@@ -3,7 +3,7 @@ from .forms import UserRegistrationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, User
-from django.db.models import Avg
+from .models import Vote 
 
 def register(request):
     if request.method == 'POST':
@@ -65,36 +65,17 @@ def teamLeader_dashboard(request):
 def engineer_dashboard(request):
     return render(request, 'dashboards/engineer.html')
 
-#summary.html
 @login_required
-def summary(request):
-    # Get the currently logged-in user
-    user = request.user
+def summary_view(request):
+    
+    # 1. Grab the first name for the header
+    firstname = request.user.first_name
 
-    # Look up the department this user belongs to
-    your_dept = user.account.departmentID
+    # 2. Fetch all Vote records for this user
+    user_votes = Vote.objects.filter(user=request.user).select_related('sessionCardID')
 
-    # Fetch all departments except the user's own
-    other_departments = Department.objects.exclude(pk=your_dept.pk)
-
-    # Annotate each team with its average votes across all sessions
-    teams = Team.objects.annotate(
-        green_avg=Avg('session__sessioncard__greenVote'),
-        amber_avg=Avg('session__sessioncard__amberVote'),
-        red_avg=Avg('session__sessioncard__redVote'),
-    )
-
-    # Compute the overall average votes across all Vote records
-    overall = Vote.objects.aggregate(
-        green_avg=Avg('greenVote'),
-        amber_avg=Avg('amberVote'),
-        red_avg=Avg('redVote'),
-    )
-
-    # Render the summary template, passing in user, departments, teams, and overall stats
-    return render(request, 'yourapp/summary.html', {
-        'user': user,
-        'departments': other_departments,
-        'teams': teams,
-        'overall': overall,
+    # 3. Render 'summary.html' with exactly the context your template uses
+    return render(request, 'summary.html', {
+        'firstname': firstname,
+        'user_votes': user_votes,
     })
