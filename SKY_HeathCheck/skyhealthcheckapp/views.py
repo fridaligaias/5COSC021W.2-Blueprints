@@ -65,7 +65,7 @@ def teamLeader_dashboard(request):
 def engineer_dashboard(request):
     return render(request, 'dashboards/engineer.html')
 
-
+#summary.html
 @login_required
 def summary(request):
     # Get the currently logged-in user
