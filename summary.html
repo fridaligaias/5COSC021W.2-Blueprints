@@ -28,11 +28,11 @@
                 <li onclick="window.location.href='templates/summary.html'">Summary</li>
             </ul>
         </aside>
-
-        <!-- Main Content -->
-    <main>
-      <div class="right-section">
-        <div class="section-title">Your Vote Summary</div>
+        
+    <!-- Main Content -->
+    <main class="sum-main">
+      <div class="sum-right-section">
+        <div class="sum-section-title">Your Vote Summary</div>
 
         {% if user_votes %}
         <table>
@@ -59,6 +59,8 @@
             {% endfor %}
           </tbody>
         </table>
+        {% else %}
+        <p>No votes to display.</p>
         {% endif %}
 
       </div>
