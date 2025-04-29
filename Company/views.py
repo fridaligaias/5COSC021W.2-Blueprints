@@ -375,8 +375,10 @@ def HandleVoting(request, userid, teamid, sessionid):
         total_votes = Vote.objects.filter(userID = request.user, sessionCardID__sessionID = sessionid).count()
 
         if total_votes >= total_cards:
-            # User voted on all cards — redirect!
-            return redirect('engineer-profile', userid = request.user.pk, teamid = teamid)
+            if (request.user.groups.first().name == "Engineer"):
+                return redirect('engineer-profile', userid = request.user.pk, teamid = teamid)
+            elif (request.user.groups.first().name == "Team Leader"):
+                return redirect('team-leader-profile', userid = request.user.pk, teamid = teamid)
                 
   cards = SessionCard.objects.filter(sessionID = sessionid)
   forms_list = [VotingForm(initial={'session_card_id': card.sessionCardID}) for card in cards]
@@ -841,4 +843,6 @@ def summary_view(request, userid, teamid):
     return render(request, 'Company/summary.html', {
         'firstname': firstname,
         'user_votes': user_votes,
+        'userid': userid,
+        'teamid': teamid,
     })

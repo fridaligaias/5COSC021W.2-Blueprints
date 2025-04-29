@@ -13,7 +13,7 @@
         <!-- Header -->
         <header>
             <div class="logo">
-                <a href="Engineer.html">
+                <a href="{% url 'engineer-profile' userid=userid teamid=teamid %}">
                     <img src="{% static 'Sky_Group_logo_2020.png' %}" alt="Sky Logo">
                 </a>
             </div>
@@ -34,13 +34,23 @@
             </aside>
 
             <!-- Main Content -->
-            <main class="vote-section">
-                <form method="post">
-                    {% csrf_token %}
-                    <label for="id_session">Session</label>
-                    {{ sessionForm.session }}
-                    <Button type="submit" name="sessionButton" value="sessionButton">Select Session</Button> 
-                </form>
+            <main class="vote-section left-section">
+                <div class="section">
+                    <div class="section-title">Select a Session</div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div style="margin-bottom: 20px;">
+                            <label for="id_session" style="display: block; margin-bottom: 10px; font-weight: bold;">Session:</label>
+                            {{ sessionForm.session }}
+                        </div>
+                        
+                        <div style="display: flex; gap: 20px; margin-top: 30px;">
+                            <button type="submit" name="sessionButton" value="sessionButton" class="start-button">
+                                Start Voting
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </main>
         </div>
     </body>

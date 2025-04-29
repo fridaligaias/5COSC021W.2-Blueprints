@@ -11,7 +11,7 @@
     <!-- Header -->
     <header>
         <div class="logo">
-            <a href="engineer.html">
+            <a href="{% url 'engineer-profile' userid=userid teamid=teamid %}">
               <img src="{% static 'Sky_Group_logo_2020.png' %}" alt="Sky Group Logo" class="sky-logo">
             </a>
         </div>
@@ -24,8 +24,8 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <ul>
-                <li onclick="window.location.href='templates/engineer.html'">Vote</li>
-                <li onclick="window.location.href='templates/summary.html'">Summary</li>
+                <li><a href="{% url 'engineer-profile' userid=userid teamid=teamid %}">Vote</a></li>
+                <li><a href="{% url 'summary' userid=userid teamid=teamid %}">Summary</a></li>
             </ul>
         </aside>
 

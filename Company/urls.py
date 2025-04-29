@@ -22,7 +22,7 @@ urlpatterns = [
     path('seniormanager/logout/', views.senior_manager_logout, name='senior-manager-logout'),
     path('seniormanager/', views.senior_manager_dashboard, name='senior_manager_dashboard'),
     path('team-leader-dashboard/<int:teamid>/', views.team_leader_dashboard, name='team_leader_dashboard'),
-    path('company/engineer/<int:userid>/<int:teamid>/summary', views.summary_view, name='summary'),
+    path('engineer/<int:userid>/<int:teamid>/summary', views.summary_view, name='summary'),
 
 ]
 
