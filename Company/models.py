@@ -13,8 +13,6 @@ from django.contrib.auth.models import User
 class Card(models.Model):
   # main ID for the card model
   cardID = models.CharField(primary_key = True, unique = True, max_length = 20)
-  # contains the image for a specific card 
-  cardImage = models.ImageField(upload_to = 'cards/', null = True)
   # holds all of the descriptions for each of the cards, from red to green
   greenDescription = models.TextField(max_length = 150) 
   amberDescription = models.TextField(max_length = 150)
@@ -79,8 +77,6 @@ class SessionCard(models.Model):
   sessionID = models.ForeignKey(Session, on_delete = models.CASCADE)
   # main ID
   sessionCardID = models.AutoField(primary_key = True, unique = True)
-  # basic meta for the cards like images and the number of votes from members
-  cardImage = models.ImageField(upload_to = 'cards/', null = True)
   greenVote = models.IntegerField(default = 0)
   amberVote = models.IntegerField(default = 0)
   redVote = models.IntegerField(default = 0)
@@ -113,7 +109,6 @@ class Vote(models.Model):
 def SetSessionCards(sender, instance, created, **kwargs):
     department = instance.teamID.departmentID.departmentCards.all()
     SessionCard.objects.bulk_create([SessionCard(sessionID = instance, 
-                                                 cardImage = card.cardImage,
                                                  greenDescription = card.greenDescription,
                                                  amberDescription = card.amberDescription,
                                                  redDescription = card.redDescription) for card in department])

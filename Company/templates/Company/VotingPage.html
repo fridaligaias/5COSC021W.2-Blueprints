@@ -41,17 +41,6 @@
           {% for card, form in forms_list %}
           <div class="vote-card" style="border:1px solid #ccc; padding:20px; margin-bottom:20px;">
   
-            {# Show the card image if it exists #}
-            {% if card.cardImage %}
-            <div class="card-image" style="margin-bottom:10px;">
-              <img 
-                src="{{ card.cardImage.url }}" 
-                alt="Card {{ card.cardID }}" 
-                style="max-width:100%;" 
-              />
-            </div>
-            {% endif %}
-  
             {# Summarize existing votes with descriptions #}
             <h3>
               Green: {{ card.greenVote }}
