@@ -19,7 +19,9 @@ from django.http import HttpResponse
 from django.db.models import Avg, F, FloatField
 from django.db.models.functions import Coalesce
 
-
+##SECTION - 
+# Members on site:
+# (Siu Kitt, Victor, Dat, Fridali, Jodel):
 
 # Displays all of the necessary fields for a register/sign-up page
 # region signup/register pages
