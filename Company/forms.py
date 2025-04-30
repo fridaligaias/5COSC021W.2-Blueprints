@@ -5,6 +5,9 @@ from Company.models import Department, Session, Team
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 
+##SECTION - 
+# Members on site:
+# (Siu Kitt, Dat):
 
 class CreateUserForm(UserCreationForm):
   

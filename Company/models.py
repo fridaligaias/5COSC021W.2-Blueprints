@@ -6,6 +6,10 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
   
+##SECTION - 
+# Members on site:
+# (Siu Kitt, Dat):
+
 class Card(models.Model):
   # main ID for the card model
   cardID = models.CharField(primary_key = True, unique = True, max_length = 20)

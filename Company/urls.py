@@ -3,6 +3,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from . import views
 
+##SECTION - 
+# Members on site:
+# (Siu Kitt, Victor, Dat, Fridali, Jodel):
+
+
 urlpatterns = [
     path("sign-up/", views.HandleSignupForm, name = 'sign-in'),
     path("login-in/", views.HandleLogin, name = 'log-in'),
