@@ -10,47 +10,56 @@ from django.db.models import Q
 # (Siu Kitt, Dat):
 
 class CreateUserForm(UserCreationForm):
-  
+  # gathers all of the groups into a dropdwon
   group = forms.ModelChoiceField(Group.objects.all(), required = True)
-  
+  # all of the necessary fields we'd like
   class Meta:
     model = User 
     fields = ['username', 'first_name', 'last_name', 'email']
-    
+
+# get all of the departments
 class SelectDepartment(forms.Form):
   department = forms.ModelChoiceField(Department.objects.all(), required = True)
-  
+
+# get all of the team
 class SelectTeam(forms.Form):
   team = forms.ModelChoiceField(queryset = Team.objects.none(), required = True)
   
   def __init__(self, *args, **kwargs):
-          departmentID = kwargs.pop('departmentID', None)  # Get passed departmentID
-          super().__init__(*args, **kwargs)
+    # get the department id and filter the teams based
+    departmentID = kwargs.pop('departmentID', None) 
+    super().__init__(*args, **kwargs)
 
-          if departmentID:
-              self.fields['team'].queryset = Team.objects.filter(departmentID = departmentID)
-          else:
-              self.fields['team'].queryset = Team.objects.none()
-  
+    if departmentID:
+      self.fields['team'].queryset = Team.objects.filter(departmentID = departmentID)
+    else:
+      self.fields['team'].queryset = Team.objects.none()
+
+# get all of the sessions
 class SelectSession(forms.Form):
   session = forms.ModelChoiceField(queryset = Session.objects.none(), required = True)
   
+  # get the team id and filter all of the sessions based
   def __init__(self, *args, **kwargs):
-          teamID = kwargs.pop('teamID', None)  # Get passed team_id
-          super().__init__(*args, **kwargs)
+    teamID = kwargs.pop('teamID', None) 
+    super().__init__(*args, **kwargs)
 
-          if teamID:
-              self.fields['session'].queryset = Session.objects.filter(teamID = teamID)
-          else:
-              self.fields['session'].queryset = Session.objects.none()
-              
+    if teamID:
+      self.fields['session'].queryset = Session.objects.filter(teamID = teamID)
+    else:
+      self.fields['session'].queryset = Session.objects.none()
+    
+# create the form we need        
 class VotingForm(forms.Form):
+  # hide the id for the sessions
   session_card_id = forms.IntegerField(widget = forms.HiddenInput())
+  # create the fields for the radio inputs
   vote_type = forms.ChoiceField(choices = [
     ('green', 'Green'),
     ('amber', 'Amber'),
     ('red', 'Red')
   ], widget = forms.RadioSelect)
+  # create the input box
   comment = forms.CharField(
     max_length = 200, 
     required = True, 
