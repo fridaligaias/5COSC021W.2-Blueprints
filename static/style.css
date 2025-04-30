@@ -1,9 +1,11 @@
+/*Fridali Gaias w1905050 -- main CSS template, for reference */
+
 /* Set PT Sans as the default font for the entire website */
 body {
     font-family: 'PT Sans', sans-serif;
     margin: 0;
     padding: 0;
-    color: #003366; /* Set the default font color to dark blue */
+    color: #003366; 
 }
 
 
@@ -11,11 +13,11 @@ body {
 /* Sky Group Logo */
 .sky-logo {
     position: fixed;
-    top: 10px; /* Adjust this to place the logo a bit lower or higher */
-    left: 10px; /* Adjust this to place the logo a bit to the right or left */
-    width: 50px; /* Adjust the size of the logo */
-    height: auto; /* Keep the aspect ratio intact */
-    z-index: 1000; /* Ensure it's on top of other elements */
+    top: 10px; 
+    left: 10px; 
+    width: 50px; 
+    height: auto; 
+    z-index: 1000; 
 }
 
 /* Background Image and Overlay for Register */
@@ -23,7 +25,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Ensures the form stays centered vertically on the page */
+    min-height: 100vh; 
     background-image: url('/static/photo-1541746972996-4e0b0f43e02a.png');
     background-size: cover;
     background-position: center;
@@ -32,13 +34,13 @@ body {
 
 
 .register-box {
-    width: 80%; /* You can adjust this percentage to your preference */
-    max-width: 600px; /* Limits the width of the form */
+    width: 80%; 
+    max-width: 600px; 
     padding: 20px;
-    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
-    text-align: center; /* Center the text inside the form */
+    background: rgba(255, 255, 255, 0.8); 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    text-align: center; 
 }
 
 h1, h3, h4 {
@@ -50,9 +52,9 @@ label, input, select {
     width: 50%;
     padding: 10px;
     margin: 10px 0;
-    /*border: 1px solid #ddd;*/
+    
     border-radius: 5px;
-    color: #003366; /* Dark blue text color for labels, inputs, and selects */
+    color: #003366; /* Dark blue text color for labels, inputs, and selects !!!*/
 }
 
 /* Role selection buttons (radio buttons) styled as rounded squares */
@@ -70,14 +72,14 @@ label, input, select {
     border: 1px solid #ddd;
     cursor: pointer;
     font-size: 16px;
-    color: #003366; /* Dark blue for text inside role buttons */
+    color: #003366; 
     transition: all 0.3s ease;
     text-align: center;
     width: 150px;
 }
 
 .role-option input {
-    display: none; /* Hide the default radio button */
+    display: none; 
 }
 
 .role-option:hover {
@@ -92,16 +94,16 @@ label, input, select {
 
 /* Styling the image inside the radio button */
 .role-img {
-    width: 50px; /* Adjust the image size */
+    width: 50px; 
     height: 50px;
     margin-bottom: 10px;
-    display: block; /* Make image a block-level element */
+    display: block; 
     margin-left: auto;
     margin-right: auto;
 }
 
 a {
-    color: #003366; /* Dark blue for links */
+    color: #003366; 
 }
 
 a:hover {
@@ -110,10 +112,10 @@ a:hover {
 
 /* Background Image and Overlay */
 .login-page {
-    background-image: url('/static/photo-1516655855035-d5215bcb5604.png'); /* Make sure this path is correct */
+    background-image: url('/static/photo-1516655855035-d5215bcb5604.png'); 
     background-size: cover;
     background-position: center;
-    height: 100vh; /* Full viewport height */
+    height: 100vh; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -121,12 +123,12 @@ a:hover {
 
 /* Semi-transparent white box */
 .login-box {
-    background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
+    background-color: rgba(255, 255, 255, 0.8); 
     padding: 30px;
     border-radius: 8px;
     width: 400px;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 /* Form Elements Styling */
@@ -137,30 +139,30 @@ input {
     border: 1px solid #ccc;
     border-radius: 1px;
     box-sizing: border-box;
-    color: #003366; /* Dark blue text color for input */
+    color: #003366; 
 }
 
 button {
-    padding: 10px 20px; /* Adjust padding to make it fit the text properly */
+    padding: 10px 20px; 
     margin: 10px 0;
-    background-color: #003366; /* Dark Blue */
+    background-color: #003366; 
     color: white;
     border: none;
-    border-radius: 25px; /* Make the button more rounded */
+    border-radius: 25px; 
     cursor: pointer;
-    font-size: 16px; /* Adjust font size for readability */
-    display: inline-block; /* Ensures the button fits the text */
+    font-size: 16px; 
+    display: inline-block; 
 }
 
 button:hover {
-    background-color: #00509e; /* Slightly lighter blue on hover */
+    background-color: #00509e; 
 }
 
 
 
 /* Text Color */
 .login-box h2, .login-box p {
-    color: #003366; /* Dark Blue */
+    color: #003366; /* Dark Blue !!!*/
 }
 
 /* Optional: Adding some space between elements */
@@ -170,7 +172,7 @@ h2 {
 
 /* Footer Styling */
 footer {
-    background-color: rgba(248, 249, 250, 0.7); /* Lighter with 70% opacity */
+    background-color: rgba(248, 249, 250, 0.7); 
     padding: 5px;
     text-align: center;
     width: 100%;
