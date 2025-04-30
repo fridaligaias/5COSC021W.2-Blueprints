@@ -6,14 +6,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vote Page</title>
-  <link rel="stylesheet" href="{% static 'css/Styles.css' %}" />
+  <link rel="stylesheet" href="{% static 'Styles.css' %}" />
 </head>
 
 <body>
     <!-- Header: logo on the left, user info on the right -->
     <header>
       <div class="logo">
-          <img src="{% static 'images/sky logo.webp' %}" alt="Sky Logo" />
+          <img src="{% static 'sky logo.webp' %}" alt="Sky Logo" />
       </div>
       <div class="user-info">
         <!-- Display the logged-in user’s first name -->
@@ -23,18 +23,6 @@
     </header>
   
     <div class="container">
-      <!-- Sidebar navigation -->
-      <aside class="sidebar">
-        <ul>
-          <li class="active">
-            {# Active page: Vote #}
-            <a href="{% url 'engineer' %}">Vote</a>
-          </li>
-          <li>
-            <a href="{% url 'summary' %}">Summary</a>
-          </li>
-        </ul>
-      </aside>
   
       <!-- dynamic vote cards -->
       <main>
