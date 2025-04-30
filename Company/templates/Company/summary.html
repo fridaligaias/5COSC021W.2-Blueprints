@@ -12,7 +12,7 @@
     <header>
         <div class="logo">
             <a href="{% url 'engineer-profile' userid=userid teamid=teamid %}">
-              <img src="{% static 'Sky_Group_logo_2020.png' %}" alt="Sky Group Logo" class="sky-logo">
+                <img src="{% static 'Sky_Group_logo_2020.png' %}" alt="Sky Group Logo" class="sky-logo">
             </a>
         </div>
         <div class="user-info">
@@ -20,52 +20,97 @@
             <div class="role-name">Engineer</div>
         </div>
     </header>
+
     <div class="container">
         <!-- Sidebar -->
         <aside class="sidebar">
             <ul>
                 <li><a href="{% url 'engineer-profile' userid=userid teamid=teamid %}">Vote</a></li>
-                <li><a href="{% url 'summary' userid=userid teamid=teamid %}">Summary</a></li>
+                <li class="active"><a href="{% url 'summary' userid=userid teamid=teamid %}">Summary</a></li>
             </ul>
         </aside>
 
         <!-- Main Content -->
-    <main class="sum-main">
-      <div class="sum-right-section">
-        <div class="sum-section-title">Your Vote Summary</div>
+        <main class="sum-main">
+            <div class="sum-right-section">
+                <div class="sum-section-title">Your Vote Summary</div>
 
-        {% if user_votes %}
-        <table>
-          <thead>
-            <tr>
-              <th>Vote ID</th>
-              <th>Card ID</th>
-              <th>Green</th>
-              <th>Amber</th>
-              <th>Red</th>
-              <th>Comment</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for vote in user_votes %}
-            <tr>
-              <td>{{ vote.voteCode }}</td>
-              <td>{{ vote.sessionCardID.sessionCardID }}</td>
-              <td>{{ vote.greenVote }}</td>
-              <td>{{ vote.amberVote }}</td>
-              <td>{{ vote.redVote }}</td>
-              <td>{{ vote.comment }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        {% else %}
-        <p>No votes to display.</p>
-        {% endif %}
+                {% if user_votes %}
+                    <!-- Green Votes -->
+                    <section class="vote-section green-section">
+                        <h4>Green Votes</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Comment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for vote in user_votes %}
+                                    {% if vote.greenVote %}
+                                        <tr>
+                                            <td>{{ vote.sessionCardID.greenDescription }}</td>
+                                            <td>{{ vote.comment }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </section>
 
-      </div>
-    </main>
+                    <!-- Amber Votes -->
+                    <section class="vote-section amber-section">
+                        <h4>Amber Votes</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Comment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for vote in user_votes %}
+                                    {% if vote.amberVote %}
+                                        <tr>
+                                            <td>{{ vote.sessionCardID.amberDescription }}</td>
+                                            <td>{{ vote.comment }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </section>
 
+                    <!-- Red Votes -->
+                    <section class="vote-section red-section">
+                        <h4>Red Votes</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Comment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for vote in user_votes %}
+                                    {% if vote.redVote %}
+                                        <tr>
+                                            <td>{{ vote.sessionCardID.redDescription }}</td>
+                                            <td>{{ vote.comment }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </section>
+
+                {% else %}
+                    <p>No votes to display.</p>
+                {% endif %}
+
+            </div>
+        </main>
     </div>
 </body>
 </html>
